@@ -1,4 +1,4 @@
-import styles from './Post.module.css';
+import styles from './styles/Post.module.css';
 import {Comment} from './Comment';
 import {Avatar} from './Avatar';
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
@@ -6,7 +6,7 @@ import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
 import {format, formatDistanceToNow} from 'date-fns';
 import {enGB} from 'date-fns/esm/locale';
 
-interface Post {
+interface PostProps {
   author: {
     name: string,
     role: string,
@@ -24,7 +24,7 @@ interface Post {
   publishedAt: Date,
 }
 
-export const Post = ({author, content, publishedAt}: Post) => {
+export const Post = ({author, content, publishedAt}: PostProps) => {
   const [comments, setComments] = useState(['Well done, congratulations!! 👏']);
   const [newCommentText, setNewCommentText] = useState(['']);
   
@@ -38,6 +38,7 @@ export const Post = ({author, content, publishedAt}: Post) => {
   
   const handleCreateNewComment = (event: FormEvent) => {
     event.preventDefault();
+    // @ts-ignore
     setComments([...comments, newCommentText]);
     // @ts-ignore
     setNewCommentText('');
@@ -46,6 +47,7 @@ export const Post = ({author, content, publishedAt}: Post) => {
   
   const handleNewCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     event.target.setCustomValidity('');
+    // @ts-ignore
     setNewCommentText(event.target.value);
   };
   
@@ -131,7 +133,7 @@ export const Post = ({author, content, publishedAt}: Post) => {
             <Comment
               key={comment}
               content={comment}
-              onDeleteComment={deleteComment} D
+              onDeleteComment={deleteComment}
             />);
         })}
       </div>

@@ -1,10 +1,14 @@
-import styles from './Comment.module.css';
+import styles from './styles/Comment.module.css';
 import {ThumbsUp, Trash} from 'phosphor-react';
 import {Avatar} from './Avatar';
 import {useState} from 'react';
 
+interface CommentProps {
+  content: string,
+  onDeleteComment:(comment: string) => void
+}
 
-export const Comment = ({content, onDeleteComment}) => {
+export const Comment = ({content, onDeleteComment}: CommentProps) => {
   
   const [likeCount, setLikeCount] = useState(0);
   
@@ -18,7 +22,7 @@ export const Comment = ({content, onDeleteComment}) => {
   
   return (
     <div className={styles.comment}>
-      <Avatar hasBorder={false} src="https://github.com/diego3g.png" alt="avatar"/>
+      <Avatar hasBorder={false} src="https://github.com/diego3g.png" alt=""/>
       
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
@@ -34,10 +38,8 @@ export const Comment = ({content, onDeleteComment}) => {
             >
               <Trash size={20}/>
             </button>
-          
           </header>
-          
-          
+
           <p>{content}</p>
         
         </div>
