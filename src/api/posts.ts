@@ -6,7 +6,7 @@
         name: 'Patrick Segantine',
         role: 'Back-end Software'
       },
-      content: [
+      contentInfo: [
         {
           type: 'paragraph',
           content: {
@@ -27,7 +27,7 @@
           },
         },
       ],
-      publishedAt: new Date( '2022-07-03 20:00:00' ),
+      publishedAt: new Date( '2023-07-03 20:00:00' ),
     },
     
     {
@@ -37,7 +37,7 @@
         name: 'Marcos Segantine',
         role: 'Front-end Software'
       },
-      content: [
+      contentInfo: [
         {
           type: 'paragraph',
           content: {
@@ -59,7 +59,7 @@
         },
       ],
       
-      publishedAt: new Date( '2022-06-03 20:00:00' ),
+      publishedAt: new Date( '2023-06-03 20:00:00' ),
       
     },
   ]

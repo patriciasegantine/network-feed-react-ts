@@ -12,42 +12,33 @@ interface PostProps {
     role: string,
     avatarUrl: string,
   }
-  content: [
-    {
-      type: 'paragraph' | 'link';
-      content: {
-        text: string,
-        url?: string,
-      }
-    }
-  ]
+  contentInfo: {
+    type: string, content: {text: string, url?: undefined | string}
+  }[]
   publishedAt: Date,
 }
 
-export const Post = ({author, content, publishedAt}: PostProps) => {
-  const [comments, setComments] = useState(['Well done, congratulations!! 👏']);
-  const [newCommentText, setNewCommentText] = useState(['']);
+export const Post = ({author, contentInfo, publishedAt}: PostProps) => {
+  const [comments, setComments] = useState<string[]>(['Well done, congratulations!! 👏']);
+  const [newCommentText, setNewCommentText] = useState('');
   
   const publishedDateFormatted = format(publishedAt, 'PPPp', {
     locale: enGB
   });
   
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: enGB,
     addSuffix: true,
   });
   
   const handleCreateNewComment = (event: FormEvent) => {
     event.preventDefault();
-    // @ts-ignore
     setComments([...comments, newCommentText]);
-    // @ts-ignore
     setNewCommentText('');
-    
   };
   
   const handleNewCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     event.target.setCustomValidity('');
-    // @ts-ignore
     setNewCommentText(event.target.value);
   };
   
@@ -55,11 +46,11 @@ export const Post = ({author, content, publishedAt}: PostProps) => {
     event.target.setCustomValidity('Esse campo é obrigatório');
   };
   
-  const deleteComment = (commentToDelete: string) => {
-    const commentWithOutDeletedOne = comments.filter(comment => {
+  const handleDeleteComment = (commentToDelete: string) => {
+    const newComment = comments.filter(comment => {
       return comment !== commentToDelete;
     });
-    setComments(commentWithOutDeletedOne);
+    setComments(newComment);
   };
   
   const isNewCommentEmpty = newCommentText.length === 0;
@@ -88,9 +79,9 @@ export const Post = ({author, content, publishedAt}: PostProps) => {
       
       <div className={styles.content}>
         
-        {content.map(line => {
+        {contentInfo?.map(line => {
             if (line.type === 'paragraph')
-              return <p key={line.content.text}> {line.content.text} </p>;
+              return <p key={line?.content.text}> {line?.content.text} </p>;
             
             if (line.type === 'link')
               return (
@@ -133,7 +124,7 @@ export const Post = ({author, content, publishedAt}: PostProps) => {
             <Comment
               key={comment}
               content={comment}
-              onDeleteComment={deleteComment}
+              onDeleteComment={handleDeleteComment}
             />);
         })}
       </div>
